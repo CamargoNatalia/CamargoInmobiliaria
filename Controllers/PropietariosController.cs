@@ -89,6 +89,7 @@ namespace CamargoInmobiliaria.Controllers;
            try
             {
                 repositorio.ObtenerPorId(id);
+                
                 repositorio.Modificacion(p);
                 
                 return RedirectToAction(nameof(Index));

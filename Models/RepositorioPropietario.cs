@@ -1,7 +1,7 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace CamargoInmobiliaria;
+namespace CamargoInmobiliaria{
 
 public class RepositorioPropietario
     {
@@ -144,6 +144,6 @@ public class RepositorioPropietario
 
         }
     }
-
+}
 
     
