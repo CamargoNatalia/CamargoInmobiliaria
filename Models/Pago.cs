@@ -17,6 +17,7 @@ namespace CamargoInmobiliaria{
     public  Inquilino inq {get; set;}
 
     }
+    
 
 
 }
