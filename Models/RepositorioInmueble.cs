@@ -34,7 +34,7 @@ public int Alta(Inmueble entidad)
 					command.Parameters.AddWithValue("@propietarioId", entidad.PropietarioId);
 					conn.Open();
 					res = Convert.ToInt32(command.ExecuteScalar());
-					entidad.inmueblesId = res;
+					entidad.Id = res;
 					conn.Close();
 				}
 			}
@@ -45,7 +45,7 @@ public int Alta(Inmueble entidad)
 			int res = -1;
 			using (MySqlConnection connection = new MySqlConnection(ConnectionString))
 			{
-				string sql = $"DELETE FROM Inmuebles WHERE inmueblesId = {id}";
+				string sql = $"DELETE FROM Inmuebles WHERE Id = {id}";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -63,7 +63,7 @@ public int Alta(Inmueble entidad)
 			{
                 string sql = "UPDATE Inmuebles SET " +
 					"Uso=@uso, Tipo=@tipo, Direccion=@direccion, Ambientes=@ambientes,Latitud=@latitud, Longitud=@longitud, Precio=@precio, PropietarioId=@propietarioId " +
-					"WHERE inmueblesId = @id";
+					"WHERE Id = @id";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
                     command.Parameters.AddWithValue("@uso", entidad.Uso);
@@ -74,7 +74,7 @@ public int Alta(Inmueble entidad)
 					command.Parameters.AddWithValue("@longitud", entidad.Longitud);
                     command.Parameters.AddWithValue("@precio", entidad.Precio);
 					command.Parameters.AddWithValue("@propietarioId", entidad.PropietarioId);
-					command.Parameters.AddWithValue("@id", entidad.inmueblesId);
+					command.Parameters.AddWithValue("@id", entidad.Id);
 					command.CommandType = CommandType.Text;
 					connection.Open();
 					res = command.ExecuteNonQuery();
@@ -90,7 +90,7 @@ public int Alta(Inmueble entidad)
 
 			using (MySqlConnection connection = new MySqlConnection(ConnectionString))
 			{
-				string sql = "SELECT inmueblesId, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId," +
+				string sql = "SELECT Id, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId," +
 					" p.Nombre, p.Apellido" +
                     " FROM Inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.Id";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
@@ -102,7 +102,7 @@ public int Alta(Inmueble entidad)
 					{
 						var entidad = new Inmueble
 						{
-							inmueblesId = reader.GetInt32(0),
+							Id = reader.GetInt32(0),
                             Uso = reader.GetString(1),
                             Tipo = reader.GetString(2),
                             Direccion = reader.GetString(3),
@@ -131,9 +131,9 @@ public int Alta(Inmueble entidad)
 			Inmueble entidad = null;
 			using (MySqlConnection connection = new MySqlConnection(ConnectionString))
 			{
-                string sql = $"SELECT inmueblesId, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId, p.Nombre, p.Apellido" +
+                string sql = $"SELECT Id, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId, p.Nombre, p.Apellido" +
                     $" FROM Inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.IdPropietario" +
-                    $" WHERE inmueblesId=@id";
+                    $" WHERE Id=@id";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
                     command.Parameters.Add("@id", (MySqlDbType)SqlDbType.Int).Value = id;
@@ -144,7 +144,7 @@ public int Alta(Inmueble entidad)
 					{
 						entidad = new Inmueble
 						{
-                            inmueblesId = reader.GetInt32(0),
+                            Id = reader.GetInt32(0),
                             Uso = reader.GetString(1),
                             Tipo = reader.GetString(2),
                             Direccion = reader.GetString(3),
@@ -173,7 +173,7 @@ public int Alta(Inmueble entidad)
             Inmueble entidad = null;
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                string sql = $"SELECT inmueblesId, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId, p.Nombre, p.Apellido" +
+                string sql = $"SELECT Id, Uso, Tipo, Direccion, Ambientes, Latitud, Longitud, Precio, PropietarioId, p.Nombre, p.Apellido" +
                     $" FROM Inmuebles i INNER JOIN Propietarios p ON i.PropietarioId = p.Id" +
                     $" WHERE PropietarioId=@id";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
@@ -186,7 +186,7 @@ public int Alta(Inmueble entidad)
                     {
                         entidad = new Inmueble
                         {
-                            inmueblesId = reader.GetInt32(0),
+                            Id = reader.GetInt32(0),
                             Uso = reader.GetString(1),
                             Tipo = reader.GetString(2),
                             Direccion = reader.GetString(3),

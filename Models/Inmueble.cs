@@ -7,7 +7,7 @@ public class Inmueble{
 
     
         [Display (Name ="Código")]
-    public int inmueblesId { get; set; }
+    public int Id { get; set; }
     public string Uso { get; set; }
     public string Tipo { get; set; }
     public int  Ambientes { get; set; }
