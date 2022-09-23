@@ -7,50 +7,86 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CamargoInmobiliaria.Controllers
 {
-    public class ContratosController : Controller
+
+ public class ContratosController : Controller
     {
-        // GET: Contratos
+      private readonly IConfiguration config;
+    private readonly IRepositorioContrato repo;
+    private readonly IRepositorioInmueble repoInmueble;
+
+          RepositorioInquilino repoInquilino = new RepositorioInquilino();
+    
+         
+     public ContratosController(RepositorioContrato repo, RepositorioInmueble repoInmueble, RepositorioInquilino repoInquilino, IConfiguration config)
+        {
+
+            this.repoInquilino = repoInquilino;
+        }
+      
+
+
+        // GET: Contrato
         public ActionResult Index()
         {
-            return View();
+            var aux = repo.ObtenerTodos();
+            return View(aux);
         }
-
-        // GET: Contratos/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Contratos/Create
+       
+        // GET: Contrato/Create
         public ActionResult Create()
         {
+
+            var listInquilino = repoInquilino.obtenerTodos();
+           var listInmueble = repoInmueble.ObtenerDisponibles();
+
+            ViewBag.inmueble = listInmueble;
+            ViewBag.inquilino = listInquilino;
             return View();
         }
 
-        // POST: Contratos/Create
+        // POST: Contrato/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Contrato c)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            if(!ModelState.IsValid){
                 return View();
+            }else{
+                if(c.fechaInicio > c.fechaFin){
+                TempData["Mensaje"] = "La Fecha de Fin debe ser superior a la Fecha de Inicio";
+                
+                return View();
+                }else{
+                    try
+                    {
+                        var alta = repo.Alta(c);
+                
+                        return RedirectToAction(nameof(Index));
+                    }
+                catch(Exception ex)
+                    {
+                        throw;
+                    }
+                }
+            
             }
+            
+            
         }
 
-        // GET: Contratos/Edit/5
+        public ActionResult Details(int id)
+        {
+            var contrato = repo.ObtenerPorId(id);
+            return View(contrato);
+        }
+        // GET: Contrato/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var contrato = repo.ObtenerPorId(id);
+            return View(contrato);
         }
 
-        // POST: Contratos/Edit/5
+        // POST: Contrato/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -58,7 +94,7 @@ namespace CamargoInmobiliaria.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,20 +103,21 @@ namespace CamargoInmobiliaria.Controllers
             }
         }
 
-        // GET: Contratos/Delete/5
+        // GET: Contrato/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var c = repo.ObtenerPorId(id);
+            return View(c);
         }
 
-        // POST: Contratos/Delete/5
+        // POST: Contrato/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                repo.Baja(id);
 
                 return RedirectToAction(nameof(Index));
             }

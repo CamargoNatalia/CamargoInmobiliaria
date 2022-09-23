@@ -7,98 +7,141 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CamargoInmobiliaria.Controllers
 {
-    public class InmueblesController : Controller
+     public class InmueblesController : Controller
     {
+        private readonly IRepositorioInmueble repositorio;
+        private readonly IRepositorioPropietario repoPropietario;
 
-        RepositorioInmueble repositorio;
-            public InmueblesController()
-            {
-                repositorio = new RepositorioInmueble();
-            }
-        // GET: Inmuebles
-        public ActionResult Index()
+        public InmueblesController(IRepositorioInmueble repositorio, IRepositorioPropietario repoPropietario)
         {
-             var lista = repositorio.ObtenerTodos();
-           
-            return View(lista);
-           
+            this.repositorio = repositorio;
+            this.repoPropietario = repoPropietario;
         }
 
-        // GET: Inmuebles/Details/5
+        // GET: Inmueble
+        public ActionResult Index()
+        {
+            var lista = repositorio.ObtenerTodos();
+            if (TempData.ContainsKey("Id"))
+                ViewBag.Id = TempData["Id"];
+            if (TempData.ContainsKey("Mensaje"))
+                ViewBag.Mensaje = TempData["Mensaje"];
+            return View(lista);
+        }
+
+        public ActionResult PorPropietario(int id)
+        {
+            var lista = repositorio.ObtenerTodos();//repositorio.ObtenerPorPropietario(id);
+            if (TempData.ContainsKey("Id"))
+                ViewBag.Id = TempData["Id"];
+            if (TempData.ContainsKey("Mensaje"))
+                ViewBag.Mensaje = TempData["Mensaje"];
+            ViewBag.Id = id;
+            //ViewBag.Propietario = repoPropietario.
+            return View("Index", lista);
+        }
+
+        // GET: Inmueble/Details/5
         public ActionResult Details(int id)
         {
             var entidad = repositorio.ObtenerPorId(id);
             return View(entidad);
-            
         }
 
-        // GET: Inmuebles/Create
+        // GET: Inmueble/Create
         public ActionResult Create()
         {
-            ViewBag.Inmuebles = repositorio.ObtenerTodos();
+            ViewBag.Propietarios = repoPropietario.ObtenerTodos();
             return View();
         }
 
-        // POST: Inmuebles/Create
+        // POST: Inmueble/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Inmueble entidad)
         {
             try
             {
-               
-
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    repositorio.Alta(entidad);
+                    TempData["Id"] = entidad.IdInmueble;
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Propietarios = repoPropietario.ObtenerTodos();
+                    return View(entidad);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                ViewBag.StackTrate = ex.StackTrace;
+                return View(entidad);
             }
         }
 
-        // GET: Inmuebles/Edit/5
+        // GET: Inmueble/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var entidad = repositorio.ObtenerPorId(id);
+            ViewBag.Propietarios = repoPropietario.ObtenerTodos();
+            if (TempData.ContainsKey("Mensaje"))
+                ViewBag.Mensaje = TempData["Mensaje"];
+            if (TempData.ContainsKey("Error"))
+                ViewBag.Error = TempData["Error"];
+            return View(entidad);
         }
 
-        // POST: Inmuebles/Edit/5
+        // POST: Inmueble/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Inmueble entidad)
         {
             try
             {
-                // TODO: Add update logic here
-
+                entidad.IdInmueble = id;
+                repositorio.Modificacion(entidad);
+                TempData["Mensaje"] = "Datos guardados correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Propietarios = repoPropietario.ObtenerTodos();
+                ViewBag.Error = ex.Message;
+                ViewBag.StackTrate = ex.StackTrace;
+                return View(entidad);
             }
         }
 
-        // GET: Inmuebles/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Inmueble/Eliminar/5
+        public ActionResult Eliminar(int id)
         {
-            return View();
+            var entidad = repositorio.ObtenerPorId(id);
+            if (TempData.ContainsKey("Mensaje"))
+                ViewBag.Mensaje = TempData["Mensaje"];
+            if (TempData.ContainsKey("Error"))
+                ViewBag.Error = TempData["Error"];
+            return View(entidad);
         }
 
-        // POST: Inmuebles/Delete/5
+        // POST: Inmueble/Eliminar/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Eliminar(int id, Inmueble entidad)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                repositorio.Baja(id);
+                TempData["Mensaje"] = "Eliminación realizada correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                ViewBag.StackTrate = ex.StackTrace;
+                return View(entidad);
             }
         }
     }

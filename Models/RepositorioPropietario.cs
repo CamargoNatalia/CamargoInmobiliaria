@@ -3,22 +3,21 @@ using MySql.Data.MySqlClient;
 
 namespace CamargoInmobiliaria{
 
-public class RepositorioPropietario
-    {
-        string ConnectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
+public class RepositorioPropietario : RepositorioBase, IRepositorioPropietario
+	{
+		public RepositorioPropietario(IConfiguration configuration) : base(configuration)
+		{
 
-        public RepositorioPropietario()
-        {
+		}
 
-        }
-
-        public IList<Propietario> obtenerTodos()
+        public IList<Propietario> ObtenerTodos()
         {
             var res = new List<Propietario>();
-            using(MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using(MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 string sql = @"SELECT Id,Nombre,Apellido,Dni,Telefono,Email
                         FROM Propietarios;";
+                        
              using (MySqlCommand comm = new MySqlCommand(sql, conn))
                 {
                     conn.Open();
@@ -48,7 +47,8 @@ public class RepositorioPropietario
         public int Alta(Propietario p)
         {
             var res = -1;
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 string sql = @$"INSERT INTO Propietarios (Nombre,Apellido,Dni,Telefono,Email)
                                VALUES(@{nameof(p.Nombre)},@{nameof(p.Apellido)},@{nameof(p.Dni)},@{nameof(p.Telefono)},@{nameof(p.Email)});
@@ -74,7 +74,7 @@ public class RepositorioPropietario
         public int Baja(int id)
         {
             int res = -1;
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sql = $"DELETE FROM Propietarios WHERE Id = @id";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
@@ -91,13 +91,14 @@ public class RepositorioPropietario
         public int Modificacion(Propietario p)
         {
             int res = -1;
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sql = $"UPDATE Propietarios SET Nombre=@nombre, Apellido=@apellido, Dni=@dni, Telefono=@telefono, Email=@email " +
                     $"WHERE Id = @id";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
+                    
                     command.Parameters.AddWithValue("@nombre", p.Nombre);
                     command.Parameters.AddWithValue("@apellido", p.Apellido);
                     command.Parameters.AddWithValue("@dni", p.Dni);
@@ -115,7 +116,7 @@ public class RepositorioPropietario
         public Propietario ObtenerPorId(int id)
         {
             Propietario p = null;
-            using (MySqlConnection connection = new MySqlConnection(ConnectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string sql = $"SELECT Id, Nombre, Apellido, Dni, Telefono, Email FROM Propietarios" +
                     $" WHERE Id=@id";
@@ -142,6 +143,73 @@ public class RepositorioPropietario
             }
             return p;
 
+        }
+    
+     public Propietario ObtenerPorEmail(string email)
+        {
+            Propietario p = null;
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string sql = $"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM Propietarios" +
+                    $" WHERE Email=@email";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@email", (MySqlDbType)SqlDbType.VarChar).Value = email;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        p = new Propietario
+                        {
+                            Id = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Dni = reader.GetString(3),
+                            Telefono = reader.GetString(4),
+                            Email = reader.GetString(5),
+                            //Clave = reader.GetString(6),
+                        };
+                    }
+                    connection.Close();
+                }
+            }
+            return p;
+        }
+
+        public IList<Propietario> BuscarPorNombre(string nombre)
+        {
+            List<Propietario> res = new List<Propietario>();
+            Propietario p = null;
+			nombre = "%" + nombre + "%";
+			using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string sql = $"SELECT Id, Nombre, Apellido, Dni, Telefono, Email, Clave FROM Propietarios" +
+                    $" WHERE Nombre LIKE @nombre OR Apellido LIKE @nombre";
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.Add("@nombre", (MySqlDbType)SqlDbType.VarChar).Value = nombre;
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        p = new Propietario
+                        {
+                            Id = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Dni = reader.GetString(3),
+                            Telefono = reader.GetString(4),
+                            Email = reader.GetString(5),
+                           
+                        };
+                        res.Add(p);
+                    }
+                    connection.Close();
+                }
+            }
+            return res;
         }
     }
 }

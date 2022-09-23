@@ -5,22 +5,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CamargoInmobiliaria.Controllers;
-
-    public class PropietariosController : Controller
+namespace CamargoInmobiliaria.Controllers
+{
+  public class PropietariosController : Controller
     {
+       
+        private readonly IRepositorioPropietario repositorio;
+        private readonly IConfiguration config;
 
-        RepositorioPropietario repositorio;
-            public PropietariosController()
-            {
-                repositorio = new RepositorioPropietario();
-            }
+        public PropietariosController(IRepositorioPropietario repo, IConfiguration config)
+        {
+        
+            this.config = config;
+        }
+
         // GET: Propietarios
         public ActionResult Index()
         {
-            var lista = repositorio.obtenerTodos();
+            var lista = repositorio.ObtenerTodos();
             return View(lista);
-            
         }
 
         // GET: Propietarios/Details/5
@@ -28,8 +31,8 @@ namespace CamargoInmobiliaria.Controllers;
         {
             try
             {
-                var p = repositorio.ObtenerPorId(id);
-                return View(p);
+                var i = repositorio.ObtenerPorId(id);
+                return View(i);
             }
             catch (Exception ex)
             {
@@ -42,25 +45,24 @@ namespace CamargoInmobiliaria.Controllers;
         // GET: Propietarios/Create
         public ActionResult Create()
         {
-             
-                return View();
+            return View();
         }
 
         // POST: Propietarios/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Propietario p)
-        { 
+        public ActionResult Create(int id, Propietario p)
+        {
             try
             {
-            
+               repositorio.ObtenerPorId(id);
                 int res = repositorio.Alta(p);
                 if (res > 0)
                     return RedirectToAction(nameof(Index));
                 else
                     return View();
+                
             }
-            
             catch(Exception ex)
             {
                 return View();
@@ -70,7 +72,7 @@ namespace CamargoInmobiliaria.Controllers;
         // GET: Propietarios/Edit/5
         public ActionResult Edit(int id)
         {
-            try
+           try
             {
                 var entidad = repositorio.ObtenerPorId(id);
                 return View(entidad);
@@ -89,9 +91,8 @@ namespace CamargoInmobiliaria.Controllers;
            try
             {
                 repositorio.ObtenerPorId(id);
-                
                 repositorio.Modificacion(p);
-                
+                TempData["Mensaje"] = "Datos guardados correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -112,9 +113,9 @@ namespace CamargoInmobiliaria.Controllers;
         // POST: Propietarios/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Propietario p)
+        public ActionResult Delete(int id,Propietario p)
         {
-             try
+           try
             {
                 
                 int res = repositorio.Baja(id);
@@ -123,11 +124,11 @@ namespace CamargoInmobiliaria.Controllers;
                 else
                     return View();
             }
-            
             catch
             {
                 return View();
+         
             }
         }
     }
-
+}

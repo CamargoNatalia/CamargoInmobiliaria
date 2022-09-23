@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.IdInmueble)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Uso)
@@ -46,7 +46,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.IdInmueble)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Uso)
@@ -69,14 +69,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Precio)
             </td>
+          
             <td>
-                @Html.DisplayFor(modelItem => item.PropietarioId)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Detalles", "Details", new {  id=item.Id }) |
-                @Html.ActionLink("Eliminar", "Delete", new {  id=item.Id }) |
-                @Html.ActionLink("Propietario", "PropietarioId", new { id=item.PropietarioId })
+					@(item.Duenio.Nombre + " " + item.Duenio.Apellido)
+				</td>
+             <td>
+                @Html.ActionLink("Editar", "Edit", new {  id=item.IdInmueble }) |
+                @Html.ActionLink("Detalles", "Details", new { id=item.IdInmueble }) |
+                @Html.ActionLink("Eliminar", "Delete", new {  id=item.IdInmueble}) |
+                @Html.ActionLink("Dueño", "Propietarios", new { id=item.PropietarioId})
+             
             </td>
         </tr>
 }
