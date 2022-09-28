@@ -1,4 +1,8 @@
 
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
+
 namespace CamargoInmobiliaria
 {
 
@@ -21,10 +25,43 @@ private readonly IConfiguration configuration;
 		
  var builder = WebApplication.CreateBuilder(args);
 		
-builder.Services.AddControllersWithViews();
-var app = builder.Build();
-       
-// Add services to the container.			
+
+
+	builder.Services.AddControllersWithViews();	
+
+		  builder.Services.AddAuthorization(options =>
+			{	
+				options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador"));
+				options.AddPolicy("Empleado" , policy => policy.RequireRole("Empleado"));	
+			});
+
+	
+			builder.Services.AddMvc();
+			builder.Services.AddSignalR();//añade signalR
+			//IUserIdProvider permite cambiar el ClaimType usado para obtener el UserIdentifier en Hub
+			//builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
+
+			//builder.Services.AddTransient<IRepositorioPropietario, RepositorioPropietario>();
+			//builder.Services.AddTransient<IRepositorioInmueble, RepositorioInmueble>();
+			//builder.Services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+			//builder.Services.AddTransient<RepositorioContrato, RepositorioContrato>();
+			//builder.Services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+
+
+
+         /*builder.Services.AddDbContext<DataContext>(
+				options => options.UseMySql(
+					configuration["ConnectionStrings:DefaultConnection"],
+					ServerVersion.AutoDetect(configuration["ConnectionStrings:DefaultConnection"])
+				)
+				);*/
+				
+		
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+	
+		
+		// Add services to the container.			
+
 Microsoft.AspNetCore.Authentication.AuthenticationBuilder authenticationBuilder = builder.Services.AddAuthentication()
 				.AddCookie(options =>//el sitio web valida con cookie
 				{
@@ -33,30 +70,14 @@ Microsoft.AspNetCore.Authentication.AuthenticationBuilder authenticationBuilder 
 					options.AccessDeniedPath = "/Home/Restringido";
 				});
 
-           builder.Services.AddAuthorization(options =>
-			{	
-				options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador"));
-				options.AddPolicy("Empleado" , policy => policy.RequireRole("Empleado"));	
-			});
-			
-		
-			builder.Services.AddTransient<IRepositorio<Propietario>, RepositorioPropietario>();
-			builder.Services.AddTransient<IRepositorioPropietario, RepositorioPropietario>();
-			//builder.Services.AddTransient<IRepositorio<Inmueble>, RepositorioInmueble>();
-			builder.Services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
-			builder.Services.AddTransient<RepositorioContrato, RepositorioContrato>();
 
-
-          /* builder.Services.AddDbContext<DataContext>(
-				options => options.UseMySql(
-					configuration["ConnectionStrings:DefaultConnection"],
-					ServerVersion.AutoDetect(configuration["ConnectionStrings:DefaultConnection"])
-				)
-				);
-				*/
-		
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		
+	var app = builder.Build();	
+	if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 			// Uso de archivos estáticos (*.html, *.css, *.js, etc.)
 			app.UseStaticFiles();
 			app.UseRouting();
@@ -76,6 +97,7 @@ Microsoft.AspNetCore.Authentication.AuthenticationBuilder authenticationBuilder 
 				endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 				
 			});
+			app.Run();
 		}
 
 		public static IWebHostBuilder CreateKestrel(string[] args)
@@ -93,7 +115,17 @@ Microsoft.AspNetCore.Authentication.AuthenticationBuilder authenticationBuilder 
 				.UseIISIntegration();
 			return host;
 		}
-
-        
-    }
+		
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+		{
+			var host = WebHost.CreateDefaultBuilder(args)
+				.ConfigureLogging(logging =>
+				{
+					logging.ClearProviders();//limpia los proveedores x defecto de log (consola+depuración)
+					logging.AddConsole();//agrega log de consola
+					//logging.AddConfigur(new LoggerConfiguration().WriteTo.File("serilog.txt").CreateLogger())
+				});
+			return host;
+		}
+	}
 }

@@ -10,7 +10,11 @@ namespace CamargoInmobiliaria.Controllers
 
  public class ContratosController : Controller
     {
-      private readonly IConfiguration config;
+         RepositorioContrato repo;
+         RepositorioInmueble repoInmueble;
+         RepositorioInquilino repoInquilino;
+    /*  
+    private readonly IConfiguration config;
     private readonly IRepositorioContrato repo;
     private readonly IRepositorioInmueble repoInmueble;
 
@@ -22,13 +26,20 @@ namespace CamargoInmobiliaria.Controllers
 
             this.repoInquilino = repoInquilino;
         }
-      
+      */
+            public ContratosController()
+            {
+                  repo = new RepositorioContrato();
+                  repoInmueble =  new RepositorioInmueble();
+                  repoInquilino = new RepositorioInquilino();
+            }
+  
 
 
         // GET: Contrato
         public ActionResult Index()
         {
-            var aux = repo.ObtenerTodos();
+            var aux = repo.obtenerTodos();
             return View(aux);
         }
        
@@ -36,11 +47,11 @@ namespace CamargoInmobiliaria.Controllers
         public ActionResult Create()
         {
 
-            var listInquilino = repoInquilino.obtenerTodos();
-           var listInmueble = repoInmueble.ObtenerDisponibles();
+           var listaInquilino = repoInquilino.obtenerTodos();
+           var listaInmueble = repoInmueble.ObtenerDisponibles();
 
-            ViewBag.inmueble = listInmueble;
-            ViewBag.inquilino = listInquilino;
+            ViewBag.inmueble = listaInmueble;
+            ViewBag.inquilino = listaInquilino;
             return View();
         }
 

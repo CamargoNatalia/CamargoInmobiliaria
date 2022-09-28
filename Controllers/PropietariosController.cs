@@ -9,15 +9,20 @@ namespace CamargoInmobiliaria.Controllers
 {
   public class PropietariosController : Controller
     {
-       
-        private readonly IRepositorioPropietario repositorio;
+        RepositorioPropietario repositorio;
+            public PropietariosController()
+            {
+                repositorio = new RepositorioPropietario();
+            }
+       /* private readonly IRepositorioPropietario repositorio;
         private readonly IConfiguration config;
 
-        public PropietariosController(IRepositorioPropietario repo, IConfiguration config)
+        public PropietariosController(IRepositorioPropietario repositorio, IConfiguration config)
         {
         
             this.config = config;
         }
+        */
 
         // GET: Propietarios
         public ActionResult Index()

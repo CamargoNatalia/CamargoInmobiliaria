@@ -3,12 +3,16 @@ using MySql.Data.MySqlClient;
 
 namespace CamargoInmobiliaria{
 
-public class RepositorioPropietario : RepositorioBase, IRepositorioPropietario
+public class RepositorioPropietario
+// : RepositorioBase, IRepositorioPropietario
 	{
-		public RepositorioPropietario(IConfiguration configuration) : base(configuration)
+              
+      string connectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
+
+		/*public RepositorioPropietario(IConfiguration configuration) : base(configuration)
 		{
 
-		}
+		}*/
 
         public IList<Propietario> ObtenerTodos()
         {

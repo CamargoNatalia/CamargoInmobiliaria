@@ -3,12 +3,16 @@ using MySql.Data.MySqlClient;
 
 namespace CamargoInmobiliaria;
 
-public class RepositorioContrato : RepositorioBase
+public class RepositorioContrato 
+//: RepositorioBase
 {
-public RepositorioContrato(IConfiguration configuration) : base(configuration)
+
+/*public RepositorioContrato(IConfiguration configuration) : base(configuration)
 		
 	 {
 	 }
+*/
+		 string connectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
 
    
     public int Alta(Contrato contrato){
@@ -86,16 +90,13 @@ public RepositorioContrato(IConfiguration configuration) : base(configuration)
             var res = new List<Contrato>();
             using(MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string sql = @"SELECT c.Id, fechaInicio, fechaFin, montoMensual,InquilinoId,InmuebleId " +
-					" inq.Nombre, inq.Apellido, inm.Direccion" +
-                    " FROM Contratos c " +
-					"INNER JOIN Inquilinos inq ON c.idInquilino = inq.Id" +
-					"INNER JOIN Inmuebles inm ON c.InmuebleId = inm.Id;";
+                string sql = @"SELECT c.id,fechaInicio, fechaFin, InquilinoId, InmuebleId, inq.Nombre, inq.Apellido, inm.Direccion, inm.precio FROM Contratos c INNER JOIN Inquilinos inq ON c.InquilinoId = inq.Id INNER JOIN Inmuebles inm ON c.InmuebleId = inm.IdInmueble";
    
              using (MySqlCommand comm = new MySqlCommand(sql, conn))
                 {
 					comm.CommandType = CommandType.Text;
                     conn.Open();
+
 
                     var reader = comm.ExecuteReader();
                     while (reader.Read())
@@ -138,10 +139,7 @@ public RepositorioContrato(IConfiguration configuration) : base(configuration)
 			using (MySqlConnection connection = new MySqlConnection(connectionString))
 			{
 
-				string sql = "SELECT c.id, Id_Inquilino, Id_Inmueble, FechaInicio, FechaExpiracion," +
-					" i.Nombre, i.Apellido, m.Direccion, m.Precio" +
-                    " FROM Contratos c INNER JOIN Inquilinos i ON c.Id_Inquilino = i.Id" +
-					" INNER JOIN Inmuebles m ON c.Id_Inmueble = m.Id";
+				string sql = "SELECT c.id,fechaInicio, fechaFin, InquilinoId, InmuebleId, inq.Nombre, inq.Apellido, inm.Direccion, inm.precio FROM Contratos c INNER JOIN Inquilinos inq ON c.InquilinoId = inq.Id INNER JOIN Inmuebles inm ON c.InmuebleId = inm.IdInmueble;";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -182,11 +180,7 @@ public IList<Contrato> ObtenerPorInmueble(int id)
             
 			using (MySqlConnection connection = new MySqlConnection(connectionString))
 			{
-				string sql = "SELECT c.id, InquilinoId, InmuebleId, fechaInicio, fechaFin," +
-					" inq.Nombre, inq.Apellido, inm.Direccion" +
-                    " FROM Contratos c INNER JOIN Inquilinos inq ON c.Id_Inquilino = i.Id" +
-					" INNER JOIN Inmuebles inm ON c.InmuebleId = inq.Id" +
-					" WHERE c.IdInmueble = @id";
+				string sql = "SELECT c.id, InquilinoId, InmuebleId, fechaInicio, fechaFin, inq.Nombre, inq.Apellido, inm.Direccion FROM Contratos c INNER JOIN Inquilinos inq ON c.InquilinoId = inq.Id INNER JOIN Inmuebles inm ON c.InmuebleId = inq.Id WHERE c.InmuebleId = @id;";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
 					command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
@@ -222,9 +216,6 @@ public IList<Contrato> ObtenerPorInmueble(int id)
 			}
 			return res;
 		}
-
-
-
 }
 
 		

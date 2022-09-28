@@ -7,14 +7,15 @@ namespace CamargoInmobiliaria{
     public class Pago{
 
         public int id { get; set; }
+        public int nroPago{ get; set; }
         public DateTime fechaPago { get; set;}
-        public float importe { get; set;}
+        public float Importe { get; set;}
 
-        [Display (Name ="Inquilino")]
-        public int InquilinoId { get; set;}
-      [ForeignKey(nameof(InquilinoId))]
+        [Display (Name ="Contrato")]
+        public int ContratoId { get; set;}
+      [ForeignKey(nameof(ContratoId))]
 
-      public  Inquilino inq {get; set;}
+      public  Contrato c {get; set;}
 
     }
     

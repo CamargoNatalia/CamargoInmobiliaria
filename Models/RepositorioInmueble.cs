@@ -3,14 +3,12 @@ using MySql.Data.MySqlClient;
 
 namespace CamargoInmobiliaria;
 
-		public class RepositorioInmueble : RepositorioBase
+		public class RepositorioInmueble 
+		//: RepositorioBase
     {
-		public RepositorioInmueble(IConfiguration configuration) : base(configuration)
-		
-		{
-			
-		}
-		
+		//public RepositorioInmueble(IConfiguration configuration) : base(configuration){}
+		 string connectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
+
     public int Alta(Inmueble entidad)
 			{
 			int res = -1;
@@ -19,7 +17,7 @@ namespace CamargoInmobiliaria;
 			{
 				string sql = @$"INSERT INTO Inmuebles (Direccion, Uso, Tipo, Ambientes, Latitud, Longitud, Precio, PropietarioId) 
 					VALUES(@{nameof(entidad.Direccion)},@{nameof(entidad.Uso)}, @{nameof(entidad.Tipo)}, @{nameof(entidad.Ambientes)},
-					@{nameof(entidad.Latitud)}, @{nameof(entidad.Longitud)}, @{nameof(entidad.Precio)}, @{nameof(entidad.PropietarioId)};
+					@{nameof(entidad.Latitud)}, @{nameof(entidad.Longitud)}, @{nameof(entidad.Precio)}, @{nameof(entidad.Estado)}, @{nameof(entidad.PropietarioId)}
 					 SELECT LAST_INSERT_ID();";
 				using (var command = new MySqlCommand(sql, connection))
 				{
@@ -215,9 +213,9 @@ namespace CamargoInmobiliaria;
             IList<Inmueble> res = new List<Inmueble>();
 			using (MySqlConnection connection = new MySqlConnection(connectionString))
 			{
-				string sql = "SELECT i.id, p.Id, Direccion, Ambientes, Latitud, Longitud , Tipo, Uso, Precio, Estado," +
+				string sql = "SELECT i.IdInmueble, p.Id, Direccion, Ambientes, Latitud, Longitud , Tipo, Uso, Precio, Estado," +
 					" p.Nombre, p.Apellido" +
-                    " FROM Inmuebles i INNER JOIN Propietarios p ON i.Id = p.Id"+
+                    " FROM Inmuebles i INNER JOIN Propietarios p ON i.IdInmueble = p.Id"+
 					$" WHERE estado=1";
 				using (MySqlCommand command = new MySqlCommand(sql, connection))
 				{
@@ -238,6 +236,7 @@ namespace CamargoInmobiliaria;
 							Uso = reader.GetString(7),
                             Precio = reader.GetFloat(8),
                             Estado = reader.GetInt32(9),
+
 							Duenio = new Propietario(){
 								Id = reader.GetInt32(1),
                                 Nombre = reader.GetString(10),

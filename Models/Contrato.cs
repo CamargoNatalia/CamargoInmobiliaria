@@ -12,6 +12,7 @@ public class Contrato{
     public DateTime fechaInicio { get; set; }
     [Display (Name ="Fecha de Finalizacion")]
     public DateTime fechaFin { get; set; }
+    [Display(Name="Monto")]
     public float montoMensual {get; set; }
     
      [Display (Name ="Inquilino")]

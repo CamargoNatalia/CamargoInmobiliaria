@@ -5,16 +5,19 @@ namespace CamargoInmobiliaria
 {
 
 	
-	public class RepositorioUsuario : RepositorioBase, IRepositorioUsuario
+	public class RepositorioUsuario 
+	//: RepositorioBase, IRepositorioUsuario
      {
+		string ConnectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
+
         
-        public string ConnectionString { get; private set; }
+        /*public string ConnectionString { get; private set; }
 
         public RepositorioUsuario(IConfiguration configuration) : base(configuration)
 		{
 
 		}
-
+*/
 		public int Alta(Usuario e)
 		{
 			int res = -1;

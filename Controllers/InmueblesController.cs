@@ -9,13 +9,24 @@ namespace CamargoInmobiliaria.Controllers
 {
      public class InmueblesController : Controller
     {
-        private readonly IRepositorioInmueble repositorio;
+      /*  private readonly IRepositorioInmueble repositorio;
         private readonly IRepositorioPropietario repoPropietario;
+        
+        private readonly IConfiguration config;
 
-        public InmueblesController(IRepositorioInmueble repositorio, IRepositorioPropietario repoPropietario)
+        public InmueblesController(IRepositorioInmueble repositorio, IRepositorioPropietario repoPropietario, IConfiguration config)
         {
             this.repositorio = repositorio;
             this.repoPropietario = repoPropietario;
+            this.config = config;
+        }*/
+        RepositorioInmueble repositorio;
+        RepositorioPropietario repoPropietario;
+
+        public InmueblesController()
+        {
+            this.repositorio = new RepositorioInmueble();
+            this.repoPropietario = new RepositorioPropietario();
         }
 
         // GET: Inmueble
@@ -23,22 +34,25 @@ namespace CamargoInmobiliaria.Controllers
         {
             var lista = repositorio.ObtenerTodos();
             if (TempData.ContainsKey("Id"))
-                ViewBag.Id = TempData["Id"];
-            if (TempData.ContainsKey("Mensaje"))
+                ViewBag.IdInmueble = TempData["Id"];
+            if (TempData.ContainsKey("Mensaje")){
                 ViewBag.Mensaje = TempData["Mensaje"];
+            }
             return View(lista);
-        }
+            
+        } 
 
         public ActionResult PorPropietario(int id)
         {
-            var lista = repositorio.ObtenerTodos();//repositorio.ObtenerPorPropietario(id);
+            var lista = repoPropietario.ObtenerTodos();
             if (TempData.ContainsKey("Id"))
                 ViewBag.Id = TempData["Id"];
             if (TempData.ContainsKey("Mensaje"))
                 ViewBag.Mensaje = TempData["Mensaje"];
             ViewBag.Id = id;
-            //ViewBag.Propietario = repoPropietario.
+           
             return View("Index", lista);
+    
         }
 
         // GET: Inmueble/Details/5

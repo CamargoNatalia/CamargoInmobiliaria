@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 namespace CamargoInmobiliaria{
     public enum enRoles
 	{
-		SuperAdministrador = 1,
-		Administrador = 2,
-		Empleado = 3,
+		
+		Administrador = 1,
+		Empleado = 2,
 	}
 
 	public class Usuario
@@ -17,15 +17,15 @@ namespace CamargoInmobiliaria{
 		public string Nombre { get; set; }
 		[Required]
 		public string Apellido { get; set; }
-		[Required, EmailAddress]
+		[Required]
 		public string Email { get; set; }
 		[Required, DataType(DataType.Password)]
 		public string Clave { get; set; }
 		public string Avatar { get; set; }
-		//[NotMapped]//Para EF
+		
 		public IFormFile AvatarFile { get; set; }
 		public int Rol { get; set; }
-		//[NotMapped]//Para EF
+		
 		public string RolNombre => Rol > 0 ? ((enRoles)Rol).ToString() : "";
 
 		public static IDictionary<int, string> ObtenerRoles()

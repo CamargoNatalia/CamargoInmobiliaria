@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "n/cP5ivAOfs1Vsj//pCtTtmiNBnNfaixz5XQZT7B3Oc=",
+  "Hash": "DSeLf3DDjxtSNXm/VUWqHTMMuNjwAd/GGJbFBhIGO90=",
   "Source": "CamargoInmobiliaria",
   "BasePath": "_content/CamargoInmobiliaria",
   "Mode": "Default",
@@ -1069,6 +1069,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Identity": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\Uploads\\avatar_10.png",
+      "SourceId": "CamargoInmobiliaria",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\",
+      "BasePath": "_content/CamargoInmobiliaria",
+      "RelativePath": "Uploads/avatar_10.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\avatar_10.png"
+    },
+    {
+      "Identity": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\Uploads\\avatar_11.png",
+      "SourceId": "CamargoInmobiliaria",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\",
+      "BasePath": "_content/CamargoInmobiliaria",
+      "RelativePath": "Uploads/avatar_11.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\avatar_11.png"
+    },
+    {
+      "Identity": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\Uploads\\avatar_2011.png",
+      "SourceId": "CamargoInmobiliaria",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\wwwroot\\",
+      "BasePath": "_content/CamargoInmobiliaria",
+      "RelativePath": "Uploads/avatar_2011.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\avatar_2011.png"
     }
   ]
 }
