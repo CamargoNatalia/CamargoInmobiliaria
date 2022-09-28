@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-08-2022 a las 06:21:47
+-- Tiempo de generación: 28-09-2022 a las 04:35:14
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -31,7 +31,9 @@ CREATE TABLE `contratos` (
   `id` int(11) NOT NULL,
   `fechaInicio` date NOT NULL,
   `fechaFin` date NOT NULL,
-  `montoMensual` float NOT NULL
+  `montoMensual` float NOT NULL,
+  `InquilinoId` int(11) NOT NULL,
+  `InmuebleId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -41,14 +43,16 @@ CREATE TABLE `contratos` (
 --
 
 CREATE TABLE `inmuebles` (
-  `id` int(11) NOT NULL,
+  `IdInmueble` int(11) NOT NULL,
   `direccion` varchar(30) NOT NULL,
   `uso` varchar(30) NOT NULL,
   `tipo` varchar(30) NOT NULL,
-  `cantAmbientes` int(11) NOT NULL,
-  `coordenadas` double NOT NULL,
+  `ambientes` int(11) NOT NULL,
+  `latitud` decimal(10,0) NOT NULL,
+  `longitud` decimal(10,0) NOT NULL,
   `precio` float NOT NULL,
-  `fecha` date NOT NULL
+  `estado` int(11) NOT NULL,
+  `PropietarioId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -84,7 +88,8 @@ CREATE TABLE `pagos` (
   `id` int(11) NOT NULL,
   `nroPago` int(11) NOT NULL,
   `fechaPago` date NOT NULL,
-  `importe` float NOT NULL
+  `importe` float NOT NULL,
+  `contratoId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -107,10 +112,20 @@ CREATE TABLE `propietarios` (
 --
 
 INSERT INTO `propietarios` (`id`, `apellido`, `nombre`, `dni`, `telefono`, `email`) VALUES
-(4, 'gomez', 'pepe', '35555', '1234', 'pGomez@gmail.com'),
-(10, 'Lopez', 'pepe', '4444', '1234567', 'pGomez@gmail.com'),
-(15, 'Lopez', 'pepe', '4444', '22222', 'jlop@aa.com              '),
-(16, 'aaaa', 'jjj', '0987', '12345678', 'j@gmail.com');
+(4, 'gomez', 'pepe', '2308741', '1234', 'pGomez@gmail.com'),
+(15, 'Lopez', 'Lucas', '4444', '222', 'lucaslop@aa.com              '),
+(24, 'aaaa', 'pepe', '35555', '1234', 'j@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `administrador` int(11) NOT NULL,
+  `empleado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tablas volcadas
@@ -126,7 +141,7 @@ ALTER TABLE `contratos`
 -- Indices de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`IdInmueble`);
 
 --
 -- Indices de la tabla `inquilinos`
@@ -147,6 +162,12 @@ ALTER TABLE `propietarios`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`administrador`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -160,7 +181,7 @@ ALTER TABLE `contratos`
 -- AUTO_INCREMENT de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdInmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilinos`
@@ -178,7 +199,13 @@ ALTER TABLE `pagos`
 -- AUTO_INCREMENT de la tabla `propietarios`
 --
 ALTER TABLE `propietarios`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `administrador` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -188,19 +215,21 @@ ALTER TABLE `propietarios`
 -- Filtros para la tabla `contratos`
 --
 ALTER TABLE `contratos`
-  ADD CONSTRAINT `contratos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `inquilinos` (`id`);
+  ADD CONSTRAINT `contratos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `inmuebles` (`IdInmueble`),
+  ADD CONSTRAINT `contratos_ibfk_2` FOREIGN KEY (`id`) REFERENCES `inquilinos` (`id`);
 
 --
 -- Filtros para la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`id`) REFERENCES `propietarios` (`id`);
+  ADD CONSTRAINT `FK_propietarioId` FOREIGN KEY (`IdInmueble`) REFERENCES `propietarios` (`id`),
+  ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`IdInmueble`) REFERENCES `propietarios` (`id`);
 
 --
 -- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `inquilinos` (`id`);
+  ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id`) REFERENCES `contratos` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
