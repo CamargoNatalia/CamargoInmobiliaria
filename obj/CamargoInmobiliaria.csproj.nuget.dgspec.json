@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj": {}
+    "C:\\Users\\Usuario\\Downloads\\ARCHIVOS\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj": {
+    "C:\\Users\\Usuario\\Downloads\\ARCHIVOS\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Downloads\\ARCHIVOS\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj",
         "projectName": "CamargoInmobiliaria",
-        "projectPath": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Downloads\\ARCHIVOS\\.NET\\CamargoInmobiliaria\\CamargoInmobiliaria.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Downloads\\.NET\\CamargoInmobiliaria\\obj\\",
+        "outputPath": "C:\\Users\\Usuario\\Downloads\\ARCHIVOS\\.NET\\CamargoInmobiliaria\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,10 +71,29 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.15, 6.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.15, 6.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.15, 6.0.15]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.15, 6.0.15]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -83,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
