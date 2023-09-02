@@ -91,7 +91,6 @@ namespace CamargoInmobiliaria.Controllers;
             {
                 repositorio.ObtenerPorId(id);
                 repositorio.Modificacion(i);
-                TempData["Mensaje"] = "Datos guardados correctamente";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

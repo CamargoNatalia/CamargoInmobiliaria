@@ -7,42 +7,7 @@ namespace CamargoInmobiliaria;
     {
 
         string ConnectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
-        public RepositorioInquilino()
-        {
-
-        }
-        public IList<Inquilino> obtenerTodos()
-        {
-            var res = new List<Inquilino>();
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
-            {
-                string sql = @"SELECT Id,Nombre,Apellido,Dni,Telefono,Email
-                        FROM Inquilinos;";
-                using (MySqlCommand comm = new MySqlCommand(sql, conn))
-                {
-                    conn.Open();
-                    var reader = comm.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        var i = new Inquilino
-                        {
-                            Id = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Apellido = reader.GetString(2),
-                            Dni = reader.GetString(3),
-                            Telefono = reader.GetString(4),
-                            Email = reader.GetString(5),
-                            
-                           
-                        };
-                        res.Add(i);
-                    }
-                    conn.Close();
-                }
-                return res;
-            }
-
-        }
+        
 
         public int Alta(Inquilino i)
         {
@@ -113,6 +78,39 @@ namespace CamargoInmobiliaria;
             }
             return res;
         }
+
+         public IList<Inquilino> obtenerTodos()
+        {
+            var res = new List<Inquilino>();
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                string sql = @"SELECT Id,Nombre,Apellido,Dni,Telefono,Email
+                        FROM Inquilinos;";
+                using (MySqlCommand comm = new MySqlCommand(sql, conn))
+                {
+                    conn.Open();
+                    var reader = comm.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var i = new Inquilino
+                        {
+                            Id = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Dni = reader.GetString(3),
+                            Telefono = reader.GetString(4),
+                            Email = reader.GetString(5),
+                            
+                           
+                        };
+                        res.Add(i);
+                    }
+                    conn.Close();
+                }
+                return res;
+            }
+
+        }
         public Inquilino ObtenerPorId(int id)
         {
             Inquilino i = null;
@@ -146,4 +144,5 @@ namespace CamargoInmobiliaria;
             return i;
 
         }
+        
     }

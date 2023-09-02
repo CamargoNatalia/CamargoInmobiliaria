@@ -4,16 +4,11 @@ using MySql.Data.MySqlClient;
 namespace CamargoInmobiliaria{
 
 public class RepositorioPropietario
-// : RepositorioBase, IRepositorioPropietario
 	{
               
       string connectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
 
-		/*public RepositorioPropietario(IConfiguration configuration) : base(configuration)
-		{
-
-		}*/
-
+		
         public IList<Propietario> ObtenerTodos()
         {
             var res = new List<Propietario>();
@@ -148,74 +143,5 @@ public class RepositorioPropietario
             return p;
 
         }
-    
-     public Propietario ObtenerPorEmail(string email)
-        {
-            Propietario p = null;
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                string sql = $"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM Propietarios" +
-                    $" WHERE Email=@email";
-                using (MySqlCommand command = new MySqlCommand(sql, connection))
-                {
-                    command.CommandType = CommandType.Text;
-                    command.Parameters.Add("@email", (MySqlDbType)SqlDbType.VarChar).Value = email;
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        p = new Propietario
-                        {
-                            Id = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Apellido = reader.GetString(2),
-                            Dni = reader.GetString(3),
-                            Telefono = reader.GetString(4),
-                            Email = reader.GetString(5),
-                            //Clave = reader.GetString(6),
-                        };
-                    }
-                    connection.Close();
-                }
-            }
-            return p;
-        }
-
-        public IList<Propietario> BuscarPorNombre(string nombre)
-        {
-            List<Propietario> res = new List<Propietario>();
-            Propietario p = null;
-			nombre = "%" + nombre + "%";
-			using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                string sql = $"SELECT Id, Nombre, Apellido, Dni, Telefono, Email, Clave FROM Propietarios" +
-                    $" WHERE Nombre LIKE @nombre OR Apellido LIKE @nombre";
-                using (MySqlCommand command = new MySqlCommand(sql, connection))
-                {
-                    command.Parameters.Add("@nombre", (MySqlDbType)SqlDbType.VarChar).Value = nombre;
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    var reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        p = new Propietario
-                        {
-                            Id = reader.GetInt32(0),
-                            Nombre = reader.GetString(1),
-                            Apellido = reader.GetString(2),
-                            Dni = reader.GetString(3),
-                            Telefono = reader.GetString(4),
-                            Email = reader.GetString(5),
-                           
-                        };
-                        res.Add(p);
-                    }
-                    connection.Close();
-                }
-            }
-            return res;
-        }
     }
 }
-
-    

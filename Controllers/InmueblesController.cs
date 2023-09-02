@@ -1,35 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CamargoInmobiliaria.Controllers
 {
-  public class PropietariosController : Controller
+    public class InmueblesController : Controller
     {
-        RepositorioPropietario repositorio;
 
-            public PropietariosController()
+        RepositorioInmueble repositorio;
+
+            public InmueblesController()
             {
-                repositorio = new RepositorioPropietario();
+                repositorio = new RepositorioInmueble();
             }
-      
-        // GET: Propietarios
+        // GET: Inmuebles
         public ActionResult Index()
         {
             var lista = repositorio.ObtenerTodos();
             return View(lista);
         }
 
-        // GET: Propietarios/Details/5
+        // GET: Inmuebles/Details/5
         public ActionResult Details(int id)
         {
             try
             {
-                var i = repositorio.ObtenerPorId(id);
-                return View(i);
+                var entidad = repositorio.ObtenerPorId(id);
+                return View(entidad);
             }
             catch (Exception ex)
             {
@@ -39,40 +34,40 @@ namespace CamargoInmobiliaria.Controllers
             }
         }
 
-        // GET: Propietarios/Create
+        // GET: Inmuebles/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Propietarios/Create
+        // POST: Inmuebles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, Propietario p)
+        public ActionResult Create(int id, Inmueble inm)
         {
-            try
-            {
-               repositorio.ObtenerPorId(id);
-                int res = repositorio.Alta(p);
-                if (res > 0)
-                    return RedirectToAction(nameof(Index));
-                else
+             try
+                    {
+                        repositorio.ObtenerPorId(id);
+                        var c = repositorio.Alta(inm);
+                         if (c > 0)
+                        return RedirectToAction(nameof(Index));
+                        else
                     return View();
-                
-            }
-            catch(Exception ex)
-            {
-                return View();
-            }
-        }
+                    }
+                catch(Exception ex)
+                    {
+                        throw;
+                    }
+                }
 
-        // GET: Propietarios/Edit/5
+
+        // GET: Inmuebles/Edit/5
         public ActionResult Edit(int id)
         {
-           try
+             try
             {
-                var entidad = repositorio.ObtenerPorId(id);
-                return View(entidad);
+                var x = repositorio.ObtenerPorId(id);
+                return View(x);
             }
             catch (Exception ex)
             {
@@ -80,15 +75,15 @@ namespace CamargoInmobiliaria.Controllers
             }
         }
 
-        // POST: Propietarios/Edit/5
+        // POST: Inmuebles/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Propietario p)
+        public ActionResult Edit(int id, Inmueble inm)
         {
-           try
+            try
             {
                 repositorio.ObtenerPorId(id);
-                repositorio.Modificacion(p);
+                repositorio.Modificacion(inm);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -99,17 +94,17 @@ namespace CamargoInmobiliaria.Controllers
             }
         }
 
-        // GET: Propietarios/Delete/5
+        // GET: Inmuebles/Delete/5
         public ActionResult Delete(int id)
         {
-            var entidad = repositorio.ObtenerPorId(id);
-                return View(entidad);
+            var x = repositorio.ObtenerPorId(id);
+                return View(x);
         }
 
-        // POST: Propietarios/Delete/5
+        // POST: Inmuebles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id,Propietario p)
+        public ActionResult Delete(int id, Inmueble inm)
         {
            try
             {
@@ -125,6 +120,6 @@ namespace CamargoInmobiliaria.Controllers
                 return View();
          
             }
-        }
     }
+}
 }

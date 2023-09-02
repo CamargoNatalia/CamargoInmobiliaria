@@ -16,12 +16,52 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Contratos/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhdG9zXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Contratos/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhdG9zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Contratos/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhdG9zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Contratos/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhdG9zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Contratos/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udHJhdG9zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inmuebles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5tdWVibGVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inmuebles/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5tdWVibGVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inmuebles/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5tdWVibGVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inmuebles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5tdWVibGVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inmuebles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5tdWVibGVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Usuario/Downloads/ARCHIVOS/.NET/CamargoInmobiliaria/Views/Inquilinos/Create.cshtml]
