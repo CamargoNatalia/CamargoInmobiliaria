@@ -41,11 +41,7 @@ private readonly IConfiguration configuration;
 			//IUserIdProvider permite cambiar el ClaimType usado para obtener el UserIdentifier en Hub
 			//builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
-			//builder.Services.AddTransient<IRepositorioPropietario, RepositorioPropietario>();
-			//builder.Services.AddTransient<IRepositorioInmueble, RepositorioInmueble>();
-			//builder.Services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
-			//builder.Services.AddTransient<RepositorioContrato, RepositorioContrato>();
-			//builder.Services.AddTransient<IRepositorioUsuario, RepositorioUsuario>();
+			
 
 
 

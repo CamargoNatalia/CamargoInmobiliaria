@@ -14,14 +14,18 @@ html {
 }
 
 body {
-  background-color: rgb(191, 199, 199);
+  background-color: #bfc7c7;
 
   margin-bottom: 60px;
 }
 
 footer{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
   text-align: center;
-    
 }
 
 

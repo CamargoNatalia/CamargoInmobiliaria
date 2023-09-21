@@ -14,51 +14,48 @@ namespace CamargoInmobiliaria.Controllers
         // GET: Inmuebles
         public ActionResult Index()
         {
-            var lista = repositorio.ObtenerTodos();
-            return View(lista);
+            var todos = repositorio.ObtenerTodos();
+            return View(todos);
         }
+
 
         // GET: Inmuebles/Details/5
         public ActionResult Details(int id)
         {
-            try
-            {
+           
                 var entidad = repositorio.ObtenerPorId(id);
                 return View(entidad);
-            }
-            catch (Exception ex)
-            {
-                {
-                    throw;
-                }
-            }
+            
         }
 
         // GET: Inmuebles/Create
         public ActionResult Create()
         {
-            return View();
+                return View();
         }
 
         // POST: Inmuebles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(int id, Inmueble inm)
+         public ActionResult Create(int id, Inmueble inm)
         {
+           
              try
                     {
                         repositorio.ObtenerPorId(id);
                         var c = repositorio.Alta(inm);
                          if (c > 0)
                         return RedirectToAction(nameof(Index));
-                        else
+                        else{
                     return View();
+                        }
                     }
                 catch(Exception ex)
                     {
                         throw;
                     }
-                }
+
+        }
 
 
         // GET: Inmuebles/Edit/5
@@ -97,8 +94,8 @@ namespace CamargoInmobiliaria.Controllers
         // GET: Inmuebles/Delete/5
         public ActionResult Delete(int id)
         {
-            var x = repositorio.ObtenerPorId(id);
-                return View(x);
+            var borrar = repositorio.ObtenerPorId(id);
+                return View(borrar);
         }
 
         // POST: Inmuebles/Delete/5
@@ -120,6 +117,6 @@ namespace CamargoInmobiliaria.Controllers
                 return View();
          
             }
+        }
     }
-}
 }

@@ -9,7 +9,7 @@ public class RepositorioPropietario
       string connectionString = "Server= localhost;User=root;Password=;Database=inmobiliaria;SslMode=none";
 
 		
-        public IList<Propietario> ObtenerTodos()
+        public IList<Propietario>ObtenerTodos()
         {
             var res = new List<Propietario>();
             using(MySqlConnection conn = new MySqlConnection(connectionString))
@@ -62,9 +62,9 @@ public class RepositorioPropietario
                     
                     conn.Open(); 
                     res = Convert.ToInt32(comm.ExecuteScalar());
-                    conn.Close();
-                    p.Id = res;
                     
+                    p.Id = res;
+                    conn.Close();
                 }
             }
             return res;

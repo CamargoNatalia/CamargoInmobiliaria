@@ -551,3 +551,4 @@ C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria\obj\Debug\net6.0\sc
 C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria\obj\Debug\net6.0\CamargoInmobiliaria.csproj.CopyComplete
 C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria\obj\Debug\net6.0\CamargoInmobiliaria.genruntimeconfig.cache
 C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria\obj\Debug\net6.0\ref\CamargoInmobiliaria.dll
+C:\Users\Usuario\Downloads\ARCHIVOS\.NET\CamargoInmobiliaria\bin\Debug\net6.0\libman.json
