@@ -53,6 +53,7 @@ namespace CamargoInmobiliaria
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
+                    command.Parameters.AddWithValue("@id", id);
                     connection.Open();
                     res = command.ExecuteNonQuery();
                     connection.Close();
@@ -88,14 +89,14 @@ namespace CamargoInmobiliaria
             }
             return res;
         }
-             public IList<Inmueble>ObtenerTodos()
+             public List<Inmueble>ObtenerTodos()
             {
                var res = new List<Inmueble>();
 
                  using(MySqlConnection conn = new MySqlConnection(ConnectionString))
                 {
-                    string sql = @"SELECT InmuebleId, direccion, Ambientes, Superficie, Latitud, Longitud, Precio, Tipo, Uso, IdPropietario,
-                                  p.Email FROM Inmuebles inm INNER JOIN Propietarios p ON inm.IdPropietario = p.Id";
+                    string sql = @"SELECT InmuebleId, Direccion, Ambientes, Superficie, Latitud, Longitud, Precio, Tipo, Uso, IdPropietario,
+                                  p.Nombre, p.Apellido FROM Inmuebles inm INNER JOIN Propietarios p ON inm.IdPropietario = p.Id";
                         
                 using (MySqlCommand comm = new MySqlCommand(sql, conn))
                 {
@@ -112,36 +113,37 @@ namespace CamargoInmobiliaria
                             Superficie = reader.GetInt32(3),
                             Latitud = reader.GetDecimal(4),
                             Longitud = reader.GetDecimal(5),
-                            Precio = reader.GetDecimal(6),
+                            Precio = reader.GetDouble(6),
                             Tipo = reader.GetString(7),
                             Uso = reader.GetString(8),
                             IdPropietario = reader.GetInt32(9),
                             Propietario = new Propietario
                             {
                                 Id = reader.GetInt32(9),
-                                Email = reader.GetString(10),                 
+                                Nombre = reader.GetString(10),   
+                                Apellido = reader.GetString(11),              
 							}        
 
                         };
                         res.Add(inm);
                     }
-                    conn.Close();
+                     conn.Close();
                 }
             }  
             return res;
         }
-        
-
+    
         public Inmueble ObtenerPorId(int id)
         {
             Inmueble inm = null;
             using (MySqlConnection connection = new MySqlConnection(ConnectionString))
             {
-                string sql = $"SELECT InmuebleId, Direccion, Ambientes, Superficie, Latitud, Longitud, Precio, Tipo, Uso, IdPropietario FROM Inmuebles" +
-                    $" WHERE InmuebleId=@id";
+                string sql = @$"SELECT InmuebleId, Direccion, Ambientes, Superficie, Latitud, Longitud, Precio, Tipo, Uso, IdPropietario, 
+                p.Nombre, p.Apellido  FROM Inmuebles inm INNER JOIN Propietarios p 
+                 WHERE i.PropietarioId = p.Id AND inm.InmuebleId = @id";
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    command.Parameters.Add("@id", (MySqlDbType)SqlDbType.Int).Value = id;
+                    command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
                     command.CommandType = CommandType.Text;
                     connection.Open();
                     var reader = command.ExecuteReader();
@@ -155,13 +157,15 @@ namespace CamargoInmobiliaria
                             Superficie = reader.GetInt32(3),
                             Latitud = reader.GetDecimal(4),
                             Longitud = reader.GetDecimal(5), 
-                            Precio = reader.GetDecimal(6),
+                            Precio = reader.GetDouble(6),
                             Tipo = reader.GetString(7),
                             Uso = reader.GetString(8),    
                             IdPropietario = reader.GetInt32(9),
-                            Propietario = new Propietario{
+                            Propietario = new Propietario
+                            {
                                 Id = reader.GetInt32(9),
-                                Email = reader.GetString(10),
+                                Nombre = reader.GetString(10),
+                                Apellido = reader.GetString(11),
                             }
                         };
                     }

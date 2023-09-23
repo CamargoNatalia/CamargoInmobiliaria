@@ -6,16 +6,26 @@ namespace CamargoInmobiliaria.Controllers
     {
 
         RepositorioInmueble repositorio;
+         RepositorioPropietario repositorioPropietario;
+
 
             public InmueblesController()
             {
                 repositorio = new RepositorioInmueble();
+                repositorioPropietario = new RepositorioPropietario();
             }
         // GET: Inmuebles
         public ActionResult Index()
         {
-            var todos = repositorio.ObtenerTodos();
-            return View(todos);
+            /*var todos = repositorio.ObtenerTodos();
+            return View(todos);*/
+            ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
+            List<Inmueble> listaInmuebles = repositorio.ObtenerTodos();
+            ViewBag.CreacionExitosa = TempData["CreacionExitosa"];
+            ViewBag.ModificacionExitosa = TempData["ModificacionExitosa"];
+            ViewBag.EliminacionExitosa = TempData["EliminacionExitosa"];
+            ViewBag.Error = TempData["Error"];
+            return View(listaInmuebles);
         }
 
 
@@ -31,16 +41,17 @@ namespace CamargoInmobiliaria.Controllers
         // GET: Inmuebles/Create
         public ActionResult Create()
         {
+                 ViewBag.Propietarios = repositorio.ObtenerTodos();
                 return View();
         }
 
         // POST: Inmuebles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-         public ActionResult Create(int id, Inmueble inm)
+         public ActionResult Create(Inmueble inmueble)
         {
            
-             try
+            /* try
                     {
                         repositorio.ObtenerPorId(id);
                         var c = repositorio.Alta(inm);
@@ -53,7 +64,25 @@ namespace CamargoInmobiliaria.Controllers
                 catch(Exception ex)
                     {
                         throw;
-                    }
+                    }*/
+              ViewBag.Propietarios = repositorioPropietario.ObtenerTodos();
+            try
+            {
+                // TODO: Add insert logic here
+                
+                int res = repositorio.Alta(inmueble);
+                if(res > 0){
+                    TempData["CreacionExitosa"] = 1;
+                    return RedirectToAction(nameof(Index));
+                }else{
+                    return View();
+                }
+
+            }
+            catch(Exception e){
+                TempData["Error"] = 1;
+                return RedirectToAction(nameof(Create));
+            }
 
         }
 
